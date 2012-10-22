@@ -435,10 +435,20 @@ NSString *const kGPUImageToneCurveFragmentShaderString = SHADER_STRING
         {
             for (unsigned int currentCurveIndex = 0; currentCurveIndex < 256; currentCurveIndex++)
             {
+                // Create a color lookup table for vlaues from 0 to 255 for teach the red, green, and blue channels
+                GLubyte blue = fmin(fmax(currentCurveIndex + [[_blueCurve objectAtIndex:currentCurveIndex] floatValue], 0), 255);
+                GLubyte green = fmin(fmax(currentCurveIndex + [[_greenCurve objectAtIndex:currentCurveIndex] floatValue], 0), 255);
+                GLubyte red = fmin(fmax(currentCurveIndex + [[_redCurve objectAtIndex:currentCurveIndex] floatValue], 0), 255);
+                
+                // Apply the RGB Composite curve to the output of the Red, Green and Blue chanels in the lookup table
+                blue = fmin(fmax(blue + [[_rgbCompositeCurve objectAtIndex:blue] floatValue], 0), 255);
+                green = fmin(fmax(green + [[_rgbCompositeCurve objectAtIndex:green] floatValue], 0), 255);
+                red = fmin(fmax(red + [[_rgbCompositeCurve objectAtIndex:red] floatValue], 0), 255);
+                
                 // BGRA for upload to texture
-                toneCurveByteArray[currentCurveIndex * 4] = fmax(currentCurveIndex + [[_blueCurve objectAtIndex:currentCurveIndex] floatValue] + [[_rgbCompositeCurve objectAtIndex:currentCurveIndex] floatValue], 0);
-                toneCurveByteArray[currentCurveIndex * 4 + 1] = fmax(currentCurveIndex + [[_greenCurve objectAtIndex:currentCurveIndex] floatValue] + [[_rgbCompositeCurve objectAtIndex:currentCurveIndex] floatValue], 0);
-                toneCurveByteArray[currentCurveIndex * 4 + 2] = fmax(currentCurveIndex + [[_redCurve objectAtIndex:currentCurveIndex] floatValue] + [[_rgbCompositeCurve objectAtIndex:currentCurveIndex] floatValue], 0);
+                toneCurveByteArray[currentCurveIndex * 4] = blue;
+                toneCurveByteArray[currentCurveIndex * 4 + 1] = green;
+                toneCurveByteArray[currentCurveIndex * 4 + 2] = red;
                 toneCurveByteArray[currentCurveIndex * 4 + 3] = 255;
             }
             
