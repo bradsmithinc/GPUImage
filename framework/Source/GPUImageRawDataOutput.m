@@ -273,9 +273,13 @@
 //    GPUByteColorVector byteAtHeight = imageColorBytes[(int)(imageSize.height - 1) * (int)imageSize.width];
 //    NSLog(@"Byte 1: %d, %d, %d, byte 2: %d, %d, %d, byte 3: %d, %d, %d", byteAtOne.red, byteAtOne.green, byteAtOne.blue, byteAtWidth.red, byteAtWidth.green, byteAtWidth.blue, byteAtHeight.red, byteAtHeight.green, byteAtHeight.blue);
     
+    CGFloat maxValue;
     CGPoint locationToPickFrom = CGPointZero;
-    locationToPickFrom.x = MIN(MAX(locationInImage.x, 0.0), (imageSize.width - 1.0));
-    locationToPickFrom.y = MIN(MAX((imageSize.height - locationInImage.y), 0.0), (imageSize.height - 1.0));
+  
+    maxValue = MAX(locationInImage.x, 0.0);
+    locationToPickFrom.x = MIN(maxValue, (imageSize.width - 1.0));
+    maxValue = MAX((imageSize.height - locationInImage.y), 0.0);
+    locationToPickFrom.y = MIN(maxValue, (imageSize.height - 1.0));
     
     if (outputBGRA)    
     {

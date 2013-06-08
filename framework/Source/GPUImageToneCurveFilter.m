@@ -77,11 +77,11 @@
             for (NSInteger y = 0; y<pointCount; y++)
             {
                 databuffer = [file readDataOfLength:2];
-                short y = CFSwapInt16BigToHost(*(int*)([databuffer bytes]));
+                short swappedY = CFSwapInt16BigToHost(*(int*)([databuffer bytes]));
                 databuffer = [file readDataOfLength:2];
-                short x = CFSwapInt16BigToHost(*(int*)([databuffer bytes]));
+                short swappedX = CFSwapInt16BigToHost(*(int*)([databuffer bytes]));
                 
-                [points addObject:[NSValue valueWithCGSize:CGSizeMake(x * pointRate, y * pointRate)]];
+                [points addObject:[NSValue valueWithCGSize:CGSizeMake(swappedX * pointRate, swappedY * pointRate)]];
             }
             
             [curves addObject:points];
