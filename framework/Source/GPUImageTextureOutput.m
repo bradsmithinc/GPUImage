@@ -61,4 +61,24 @@
     return NO;
 }
 
+- (void)setTextureDelegate:(id<GPUImageTextureDelegate>)newTextureDelegate atIndex:(NSInteger)textureIndex;
+{
+    textureDelegate = newTextureDelegate;
+}
+
+- (void)conserveMemoryForNextFrame;
+{
+    
+}
+
+- (BOOL)wantsMonochromeInput;
+{
+    return NO;
+}
+
+- (void)setCurrentlyReceivingMonochromeInput:(BOOL)newValue;
+{
+    
+}
+
 @end
